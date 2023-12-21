@@ -1,0 +1,16 @@
+.container {}
+.content {
+    display: block !important;
+}
+#page_title {
+    font-weight: 600;
+    font-size: 36px;
+
+    text-align: center;
+    width: 100%;
+    margin-top: 100px;
+}
+.creation_blocks {
+    margin-top: 20px;
+    justify-content: space-between;
+}

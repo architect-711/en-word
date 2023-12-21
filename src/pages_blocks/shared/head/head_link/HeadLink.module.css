@@ -1,0 +1,13 @@
+.link {
+    margin-right: 10px;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    color: #000;
+    opacity: .8;
+    text-decoration: none;
+}
+.link:last-child {
+    margin: 0;
+}

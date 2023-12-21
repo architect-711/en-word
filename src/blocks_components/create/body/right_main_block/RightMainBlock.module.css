@@ -1,0 +1,21 @@
+.container {
+    background-color: #F7F2F2;
+    width: 75%;
+    height: 300px;
+    padding: 15px;
+
+    border-radius: 10px;
+}
+.content {}
+.create_block_container {
+    justify-content: space-between;
+}
+.input {
+    width: 80%;
+}
+.button {
+    width: 15%;
+}
+.error_message {
+    margin-top: 20px;
+}

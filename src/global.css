@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0, 0.8);
+    font-family: 'Inter', sans-serif;
+}
+
+._global_content_class {
+    width: 60%;
+    margin-left: 20%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+._global_flex_class {
+    display: flex;
+    align-items: center;
+}

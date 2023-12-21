@@ -1,0 +1,19 @@
+.button {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 20px;
+
+    border: 1px solid #fff;
+    border-radius: 5px;
+    background-color: #fff;
+
+    cursor: pointer;
+}
+
+.button:hover {
+    border: 1px solid #000;
+}
+.button:focus {
+    border: 2px solid #1958F9;
+    margin: -1px;
+}

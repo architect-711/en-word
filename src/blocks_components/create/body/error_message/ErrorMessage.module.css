@@ -1,0 +1,11 @@
+.container {
+    padding: 10px;
+    background-color: #FF4D4D;
+
+    border-radius: 5px;
+}
+.message {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+}
