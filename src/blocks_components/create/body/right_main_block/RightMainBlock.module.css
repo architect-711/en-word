@@ -7,15 +7,6 @@
     border-radius: 10px;
 }
 .content {}
-.create_block_container {
-    justify-content: space-between;
-}
-.input {
-    width: 80%;
-}
-.button {
-    width: 15%;
-}
 .error_message {
     margin-top: 20px;
 }

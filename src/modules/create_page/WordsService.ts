@@ -8,7 +8,7 @@ export default class WordsService {
     }
 
     public addNewWord(title: string): void {
-
+        this._words.push(this.craeteWord(title));
     }
 
     public craeteWord(title: string): Word {
@@ -19,7 +19,7 @@ export default class WordsService {
         return this._words;
     }
 
-    public get state(): this {
-        return this;
+    public get state(): WordsService {
+        return new WordsService(this._words);
     }
 }
