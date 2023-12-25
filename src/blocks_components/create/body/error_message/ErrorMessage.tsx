@@ -9,13 +9,13 @@ export default function ErrorMessage({message, className}: Props): JSX.Element {
     return (
         <>
             {
-                message.length
+                message.length === 0
                 ?
+                <></>
+                :
                 <div className={`${styles.container} ${className}`}>
                     <p className={styles.message}>{message}</p>
                 </div>
-                :
-                <></>
             }
         </>
     );

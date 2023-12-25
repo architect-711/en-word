@@ -8,8 +8,16 @@
     /* CHANGE */
     height: 300px;
 }
-.content {}
+.content {
+    position: relative;
+    height: 100%;
+}
 #title {
     font-size: 20px;
     font-weight: 500;
+}
+.button {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
 }

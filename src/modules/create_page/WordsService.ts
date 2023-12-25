@@ -15,6 +15,10 @@ export default class WordsService {
         return {id: Date.now(), title: title};
     }
 
+    public clear(): void {
+        this._words.length = 0;
+    }
+
     public get words(): Word[] {
         return this._words;
     }
