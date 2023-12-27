@@ -19,35 +19,20 @@ export default function WordsCreationContainer({ setErrorMessage }: Props) {
     function onCreateButtonClick(): void {
         inputValidator.validate();
 
-        if (isErrorSetted()) {
+        if (!inputValidator.isValid()) {
+            setErrorMessage("String contains not English letters or it is empty");
+
+            return;
+        }
+        if (wordsService.isExistsByTitle(inputValidator.input)) {
+            setErrorMessage("This word is already exists.");
+
             return;
         }
 
         addValidWord(inputValidator.input);
         setInputValue('');
         setErrorMessage('');
-    }
-
-    function isErrorSetted(): boolean {
-        const errorMessage: string = getErrorMessage();
-
-        if (errorMessage.length > 0) {
-            setErrorMessage(errorMessage);
-
-            return true;
-        }
-        return false;
-    }
-
-    function getErrorMessage(): string {
-        //! I don't fucking know how to handle them humanly, ErrorBoundary component doesn't catch the error if you throw it
-        if (!inputValidator.isValid()) {
-            return "String contains not English letters or it is empty" ;
-        }
-        if (wordsService.isExistsByTitle(inputValidator.input)) {
-            return "This word is already exists.";
-        }
-        return '';
     }
 
     function addValidWord(title: string): void {
