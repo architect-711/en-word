@@ -8,11 +8,17 @@ export default class WordsService {
     }
 
     public addNewWord(title: string): void {
-        this._words.push(this.craeteWord(title));
+        this._words.push(this.createWord(title));
     }
 
-    public craeteWord(title: string): Word {
+    public createWord(title: string): Word {
         return {id: Date.now(), title: title};
+    }
+
+    public isExistsByTitle(title: string): boolean {
+        const word: Word | undefined = this._words.find(word => word.title === title);
+
+        return typeof word !== "undefined";
     }
 
     public clear(): void {

@@ -2,7 +2,7 @@ import styles from './ErrorMessage.module.css';
 
 interface Props {
     message: string,
-    className: string
+    className?: string
 }
 
 export default function ErrorMessage({message, className}: Props): JSX.Element {

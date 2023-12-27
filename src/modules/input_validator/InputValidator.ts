@@ -6,22 +6,14 @@ export default class InputValidator {
     }
 
     public validate(): void {
-        if (!this.isValid()) {
-            throw new Error("String contains not english letters.");
-        }
-    }
-
-    public toNormalString() {
-        this._input.trim().toLowerCase();
+        this._input = this._input.trim().toLowerCase();
     }
 
     public isValid(): boolean {
-        this.toNormalString();
-
         const chars: string[] = this._input.split("");
 
         for (const char of chars) {
-            if (!(char >= "a" || char <= "z")) {
+            if (!(char >= "a" && char <= "z")) {
                 return false;
             }
         }
@@ -31,5 +23,9 @@ export default class InputValidator {
 
     public get input(): string {
         return this._input;
+    }
+
+    public set input(string: string) {
+        this._input = string;
     }
 }

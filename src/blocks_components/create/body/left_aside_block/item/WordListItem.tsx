@@ -8,7 +8,7 @@ interface Props {
 export default function WordListItem({word}: Props): JSX.Element {
     return (
         <li className={styles.li}>
-            {word.title}
+            {word.title.replace(word.title.charAt(0), word.title.charAt(0).toUpperCase())}
         </li>
     );
 }

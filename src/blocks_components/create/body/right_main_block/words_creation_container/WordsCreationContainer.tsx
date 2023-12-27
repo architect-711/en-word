@@ -9,26 +9,51 @@ interface Props {
     setErrorMessage: (message: string) => void
 }
 
-export default function WordsCreationContainer({setErrorMessage}: Props) {
+// TODO: rewrite this piece of fucking shit
+export default function WordsCreationContainer({ setErrorMessage }: Props) {
     const { wordsService, setWordsService } = useContext(WordsContext);
     const [inputValue, setInputValue] = useState<string>('');
 
-    function addNewWord(): void {
-        const inputValidator = new InputValidator(inputValue);
+    const inputValidator = new InputValidator(inputValue);
 
-        try {
-            inputValidator.validate();
+    function onCreateButtonClick(): void {
+        inputValidator.validate();
 
-            wordsService.addNewWord(inputValue);
-
-            // TODO: does something with this heap of setStates
-            setWordsService(wordsService.state);
-            setInputValue('');
-            setErrorMessage('');
-        } catch (error) {
-            // TODO: Handle error
-            setErrorMessage(error.message);
+        if (isErrorSetted()) {
+            return;
         }
+
+        addValidWord(inputValidator.input);
+        setInputValue('');
+        setErrorMessage('');
+    }
+
+    function isErrorSetted(): boolean {
+        const errorMessage: string = getErrorMessage();
+
+        if (errorMessage.length > 0) {
+            setErrorMessage(errorMessage);
+
+            return true;
+        }
+        return false;
+    }
+
+    function getErrorMessage(): string {
+        //! I don't fucking know how to handle them humanly, ErrorBoundary component doesn't catch the error if you throw it
+        if (!inputValidator.isValid()) {
+            return "String contains not English letters or it is empty" ;
+        }
+        if (wordsService.isExistsByTitle(inputValidator.input)) {
+            return "This word is already exists.";
+        }
+        return '';
+    }
+
+    function addValidWord(title: string): void {
+        wordsService.addNewWord(title);
+
+        setWordsService(wordsService.state);
     }
 
     return (
@@ -40,7 +65,7 @@ export default function WordsCreationContainer({setErrorMessage}: Props) {
                 value={inputValue}
                 setInputValue={setInputValue}
             />
-            <Button text="create" className={styles.button} onClick={addNewWord}/>
+            <Button text="create" className={styles.button} onClick={onCreateButtonClick}/>
 
         </div>
     );
