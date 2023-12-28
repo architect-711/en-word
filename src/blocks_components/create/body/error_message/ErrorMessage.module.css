@@ -3,6 +3,8 @@
     background-color: #FF4D4D;
 
     border-radius: 5px;
+
+    justify-content: space-between;
 }
 .message {
     color: #fff;

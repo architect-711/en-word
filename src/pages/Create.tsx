@@ -6,7 +6,7 @@ import WordsService from "../modules/create_page/WordsService";
 import WordsContext from "../context/create_page/WordsContext";
 
 export default function Create(): JSX.Element {
-    const [wordsService, setWordsService] = useState<WordsService>(new WordsService([{id: 1, title: "test"}]));
+    const [wordsService, setWordsService] = useState<WordsService>(new WordsService([]));
 
     return (
         <>

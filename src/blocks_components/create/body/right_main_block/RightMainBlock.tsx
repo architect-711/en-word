@@ -12,7 +12,7 @@ export default function RightMainBlock(): JSX.Element {
 
                 <WordsCreationContainer setErrorMessage={setErrorMessage}/>
 
-                <ErrorMessage message={errorMessage} className={styles.error_message}/>
+                <ErrorMessage error={{ errorMessage, setErrorMessage }} className={styles.error_message}/>
 
             </div>
         </div>
