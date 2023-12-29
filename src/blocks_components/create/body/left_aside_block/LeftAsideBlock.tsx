@@ -24,7 +24,7 @@ export default function LeftAsideBlock(): JSX.Element {
 
                 <WordsListViewController/>
 
-                {/* buttons */}
+                {/* pagination */}
                 <Button
                     text="clear list"
                     onClick={clearWordsList}

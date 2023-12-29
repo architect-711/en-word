@@ -2,3 +2,12 @@
     font-size: 16px;
     font-weight: 400;
 }
+.container {
+    justify-content: space-between;
+
+    padding: 5px 5px;
+    border-radius: 5px;
+}
+.container:hover {
+    background-color: #fff;
+}

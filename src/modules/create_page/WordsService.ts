@@ -21,6 +21,10 @@ export default class WordsService {
         return typeof word !== "undefined";
     }
 
+    public deleteWordById(id: number): void {
+        this._words = this._words.filter(word => word.id !== id);
+    }
+
     public clear(): void {
         this._words.length = 0;
     }

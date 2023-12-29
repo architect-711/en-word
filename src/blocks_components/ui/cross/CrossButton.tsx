@@ -1,9 +1,9 @@
 import styles from "./CrossButton.module.css";
 
 interface Props {
-    size?: { width: number, height: number } | null,
-    strokeWidth: string,
-    color: "#fff" | "#000",
+    size?: { width: string, height: string } | null,
+    strokeWidth?: string | null,
+    color: string,
     onClick: () => void
 }
 
@@ -21,7 +21,7 @@ export default function CrossButton({ size, strokeWidth, color, onClick }: Props
             <path
                 d="M19 5L5 19M5.00001 5L19 19"
                 stroke={ color }
-                strokeWidth={ strokeWidth }
+                strokeWidth={ strokeWidth ?? "2"}
                 strokeLinecap="round"
                 strokeLinejoin="round"
             />
