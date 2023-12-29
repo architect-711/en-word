@@ -4,6 +4,7 @@ import InputValidator from '../../../../../modules/input_validator/InputValidato
 import Button from '../../../../ui/button/Button';
 import Input from '../../../../ui/input/Input';
 import styles from './WordsCreationContainer.module.css';
+import CustomEssentialError from '../../../../../typing/interface/CustomEssentialError';
 
 interface Props {
     setErrorMessage: (message: string) => void
@@ -20,7 +21,7 @@ export default function WordsCreationContainer({ setErrorMessage }: Props) {
         inputValidator.validate();
 
         if (!inputValidator.isValid()) {
-            setErrorMessage("String contains not English letters or it is empty");
+            setErrorMessage("String contains not English letters or it is empty.");
 
             return;
         }
@@ -36,9 +37,17 @@ export default function WordsCreationContainer({ setErrorMessage }: Props) {
     }
 
     function addValidWord(title: string): void {
-        wordsService.addNewWord(title);
+        try {
+            wordsService.addNewWord(title);
 
-        setWordsService(wordsService.state);
+            setWordsService(wordsService.state);
+        } catch (error) {
+            if (error instanceof CustomEssentialError) {
+                setErrorMessage(error.message);
+            } else {
+                setErrorMessage("Unknown error happaned.");
+            }
+        }
     }
 
     return (

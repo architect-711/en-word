@@ -1,13 +1,18 @@
+import CustomEssentialError from "../../typing/interface/CustomEssentialError";
 import Word from "../../typing/interface/Word";
 
 export default class WordsService {
     private _words: Word[] = [];
+    private readonly MAX_WORDS_NUMBER: number = 100;
 
     constructor(words: Word[]) {
         this._words = words;
     }
 
     public addNewWord(title: string): void {
+        if (this._words.length > this.MAX_WORDS_NUMBER) {
+            throw new CustomEssentialError("Max words size reached.");
+        }
         this._words.push(this.createWord(title));
     }
 
