@@ -13,4 +13,5 @@
 .creation_blocks {
     margin-top: 20px;
     justify-content: space-between;
+    align-items: start !important;
 }

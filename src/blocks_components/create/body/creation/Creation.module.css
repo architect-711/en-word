@@ -1,0 +1,17 @@
+.container  {
+    width: 50%;
+    border-radius: 10px;
+    background-color: #F7F2F2;
+
+    padding: 10px;
+
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+.content {
+    flex: 1 1 auto;
+}
+.error_message {
+    margin-top: 10px;
+}

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
-import CrossButton from '../../../ui/cross/CrossButton';
 import styles from './ErrorMessage.module.css';
+import CrossButton from '../cross/CrossButton';
 
 interface Props {
     error: { errorMessage: string, setErrorMessage: Dispatch<SetStateAction<string>> },

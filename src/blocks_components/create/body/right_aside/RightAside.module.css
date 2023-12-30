@@ -1,12 +1,12 @@
 .container {
     background-color: #F7F2F2;
-    width: 75%;
-    height: 300px;
+    width: 20%;
     padding: 15px;
 
     border-radius: 10px;
 }
 .content {}
-.error_message {
-    margin-top: 20px;
+#title {
+    font-size: 20px;
+    font-weight: 500;
 }

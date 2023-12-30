@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import ErrorMessage from '../error_message/ErrorMessage';
-import styles from './RightMainBlock.module.css';
-import WordsCreationContainer from './words_creation_container/WordsCreationContainer';
+import { useState } from "react";
+import ErrorMessage from "../../../ui/error_message/ErrorMessage";
+import WordsCreationContainer from "../right_aside/words_creation_container/WordsCreationContainer";
+import styles from "./Creation.module.css";
 
-export default function RightMainBlock(): JSX.Element {
+export default function Creation(): JSX.Element {
     const [errorMessage, setErrorMessage] = useState<string>('');
 
     return (
@@ -15,6 +15,8 @@ export default function RightMainBlock(): JSX.Element {
                 <ErrorMessage error={{ errorMessage, setErrorMessage }} className={styles.error_message}/>
 
             </div>
+
+
         </div>
     );
 }

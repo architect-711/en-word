@@ -59,7 +59,7 @@ export default function WordsCreationContainer({ setErrorMessage }: Props) {
                 value={inputValue}
                 setInputValue={setInputValue}
             />
-            <Button text="create" className={styles.button} onClick={onCreateButtonClick}/>
+            <Button text="create" onClick={onCreateButtonClick}/>
 
         </div>
     );

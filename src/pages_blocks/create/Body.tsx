@@ -1,5 +1,6 @@
-import LeftAsideBlock from '../../blocks_components/create/body/left_aside_block/LeftAsideBlock';
-import RightMainBlock from '../../blocks_components/create/body/right_main_block/RightMainBlock';
+import Creation from '../../blocks_components/create/body/creation/Creation';
+import LeftAsideBlock from '../../blocks_components/create/body/left_aside/LeftAside';
+import RightAside from '../../blocks_components/create/body/right_aside/RightAside';
 import styles from './Body.module.css';
 
 export default function Body(): JSX.Element {
@@ -11,7 +12,8 @@ export default function Body(): JSX.Element {
 
                 <div className={`${styles.creation_blocks} _global_flex_class`}>
                     <LeftAsideBlock/>
-                    <RightMainBlock/>
+                    <Creation/>
+                    <RightAside/>
                 </div>
 
             </div>
