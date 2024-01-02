@@ -1,2 +1,8 @@
 .container {}
-.item {}
+.ul {
+    margin-top: 10px;
+    justify-content: start;
+}
+.ul li + li {
+    margin-left: 5px;
+}

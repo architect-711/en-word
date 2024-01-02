@@ -1,42 +1,34 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import WORDS_PER_PAGE from "../../../../../typing/constant/wordsPerPageCount";
 import styles from "./Pagination.module.css";
-import WordsContext from "../../../../../context/create_page/WordsContext";
-import Word from "../../../../../typing/interface/Word";
+import { Item } from "./paginaiton_item/Item";
 
 interface Props {
-    current: {
-        currentWords: Word[],
-        setCurrentWords: Dispatch<SetStateAction<Word[]>>
-    }
+	currentPage: number,
+	totalWords: number,
+	paginate: (pageNumber: number) => void
 }
 
-//! BUG!!! React stucks in infinite loop and all you can do is shut down chrome from task manager
-export default function Pagination({ current }: Props): JSX.Element {
-    const { wordsService } = useContext(WordsContext);
+export default function Pagination({ currentPage, totalWords, paginate }: Props) {
+	const pageNumbers: number[] = [];
 
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const [wordsPerPage, setWordsPerPage] = useState<number>(10);
+	for (let index: number = 1; index <= Math.ceil(totalWords / WORDS_PER_PAGE); index++) {
+		pageNumbers.push(index);
+	}
 
-    if (wordsService.words.length < 10) {
-        current.setCurrentWords(wordsService.words);
-
-        return <div>1</div>
-    }
-
-    const indexOfLastWord: number = currentPage * wordsPerPage;
-    const indexOfFirstWord: number = indexOfLastWord - wordsPerPage;
-    const currentWords: Word[] = wordsService.words.slice(indexOfFirstWord, indexOfLastWord);
-
-    console.log(indexOfLastWord, indexOfFirstWord);
-    console.log(currentWords);
-
-    current.setCurrentWords(currentWords);
-
-    return (
-        <div className={styles.container}>
-            {
-                currentWords.map((_, index) => <div>{index + 1}</div>)
-            }
-        </div>
-    );
+	return (
+		<div className={styles.container}>
+			<ul className={`${styles.ul} _global_flex_class`}>
+				{
+					pageNumbers.map(number => (
+						<Item
+							key={number}
+							number={number}
+							isActive={number === currentPage}
+							onClick={() => paginate(number)}
+						/>
+					))
+				}
+			</ul>
+		</div>
+	)
 }
