@@ -1,17 +1,18 @@
-import { useContext } from "react";
-import WordsContext from "../../../../../context/create_page/WordsContext";
+import Word from "../../../../../typing/interface/Word";
 import WordsList from "../list/WordsList";
 import styles from "./WordsListViewController.module.css";
 
-export default function WordsListViewController(): JSX.Element {
-    const { wordsService } = useContext(WordsContext);
+interface Props {
+    words: Word[]
+}
 
+export default function WordsListViewController({ words }: Props): JSX.Element {
     return (
         <div className={styles.container}>
             {
-                wordsService.words.length
+                words.length > 0
                 ?
-                <WordsList/>
+                <WordsList words={words}/>
                 :
                 <p>No words found</p>
             }
