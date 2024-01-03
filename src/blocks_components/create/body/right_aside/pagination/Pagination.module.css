@@ -1,7 +1,7 @@
 .container {}
 .ul {
     margin-top: 10px;
-    justify-content: start;
+    justify-content: center;
 }
 .ul li + li {
     margin-left: 5px;
