@@ -1,16 +1,15 @@
 import { useContext, useState } from 'react';
 import WordsContext from '../../../../../context/create_page/WordsContext';
 import InputValidator from '../../../../../modules/input_validator/InputValidator';
+import MAX_WORDS_NUMBER from '../../../../../typing/constant/maxWordsNumber';
 import Button from '../../../../ui/button/Button';
 import Input from '../../../../ui/input/Input';
 import styles from './WordsCreationContainer.module.css';
-import CustomEssentialError from '../../../../../typing/interface/CustomEssentialError';
 
 interface Props {
     setErrorMessage: (message: string) => void
 }
 
-// TODO: rewrite this piece of fucking shit
 export default function WordsCreationContainer({ setErrorMessage }: Props) {
     const { wordsService, setWordsService } = useContext(WordsContext);
     const [inputValue, setInputValue] = useState<string>('');
@@ -20,14 +19,7 @@ export default function WordsCreationContainer({ setErrorMessage }: Props) {
     function onCreateButtonClick(): void {
         inputValidator.validate();
 
-        if (!inputValidator.isValid()) {
-            setErrorMessage("String contains not English letters or it is empty.");
-
-            return;
-        }
-        if (wordsService.isExistsByTitle(inputValidator.input)) {
-            setErrorMessage("This word is already exists.");
-
+        if (isChecksFailed()) {
             return;
         }
 
@@ -36,18 +28,27 @@ export default function WordsCreationContainer({ setErrorMessage }: Props) {
         setErrorMessage('');
     }
 
-    function addValidWord(title: string): void {
-        try {
-            wordsService.addNewWord(title);
+    function isChecksFailed(): boolean {
+        const errorCases: { id: number, condition: boolean, message: string }[] = [
+            {id: 0, condition: !inputValidator.isValid(), message: "String contains not English letter or empty."},
+            {id: 1, condition: wordsService.isExistsByTitle(inputValidator.input), message: "This word is already exists."},
+            {id: 2, condition: wordsService.words.length === MAX_WORDS_NUMBER, message: `Max words number (${MAX_WORDS_NUMBER}) reached.`}
+        ] as const;
 
-            setWordsService(wordsService.state);
-        } catch (error) {
-            if (error instanceof CustomEssentialError) {
-                setErrorMessage(error.message);
-            } else {
-                setErrorMessage("Unknown error happaned.");
-            }
+        const happanedErrorCase = errorCases.find(error => error.condition);
+
+        if (typeof happanedErrorCase !== "undefined") {
+            setErrorMessage(happanedErrorCase.message);
+
+            return true;
         }
+        return false;
+    }
+
+    function addValidWord(title: string): void {
+        wordsService.addNewWord(title);
+
+        setWordsService(wordsService.state);
     }
 
     return (
