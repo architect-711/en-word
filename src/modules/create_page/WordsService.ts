@@ -26,6 +26,10 @@ export default class WordsService {
         return typeof word !== "undefined";
     }
 
+    public getWordByTitle(title: string): Word | undefined {
+        return this._words.find(word => word.title === title);
+    }
+
     public deleteWordById(id: number): void {
         this._words = this._words.filter(word => word.id !== id);
     }

@@ -1,10 +1,15 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import CreationModeContext from '../../../../context/create_page/CreationModeContext';
 import WordsContext from '../../../../context/create_page/WordsContext';
+import CreationMode from '../../../../typing/types/CreationMode';
 import Button from '../../../ui/button/Button';
 import styles from './LeftAside.module.css';
 
 export default function LeftAsideBlock(): JSX.Element {
     const { wordsService, setWordsService } = useContext(WordsContext);
+    const { action, setAction } = useContext(CreationModeContext);
+
+    const [mode, setMode] = useState<CreationMode>(action);
 
     function clearWordsList(): void {
         if (wordsService.words.length === 0) {
@@ -13,6 +18,13 @@ export default function LeftAsideBlock(): JSX.Element {
         wordsService.clear();
 
         setWordsService(wordsService.state);
+    }
+
+    function handleActionButtonClick(): void {
+        const definedAction: CreationMode = mode === "add" ? "search" : "add";
+
+        setAction(definedAction);
+        setMode(definedAction);
     }
 
     return (
@@ -28,8 +40,8 @@ export default function LeftAsideBlock(): JSX.Element {
                         className={styles.button}
                     />
                     <Button
-                        text="find in added"
-                        onClick={() => console.log("clicked 'find in added'")}
+                        text={mode === "add" ? "find in added" : "create new"}
+                        onClick={handleActionButtonClick}
                         className={styles.button}
                     />
                     <Button

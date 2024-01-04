@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react';
-import Word from '../../../../../typing/interface/Word';
+import Word from '../../../../../../typing/interface/Word';
 import styles from './WordListItem.module.css';
-import CrossButton from '../../../../ui/cross/CrossButton';
-import WordsContext from '../../../../../context/create_page/WordsContext';
+import CrossButton from '../../../../../ui/cross/CrossButton';
+import WordsContext from '../../../../../../context/create_page/WordsContext';
 
 interface Props {
     word: Word

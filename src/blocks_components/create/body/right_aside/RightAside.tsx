@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import WordsContext from '../../../../context/create_page/WordsContext';
 import Word from '../../../../typing/interface/Word';
-import WordsListViewController from '../left_aside/words_list_view_controller/WordsListViewController';
+import WordsListViewController from './words_list_view_controller/WordsListViewController';
 import styles from './RightAside.module.css';
 import Pagination from './pagination/Pagination';
 import WORDS_PER_PAGE from '../../../../typing/constant/wordsPerPageCount';

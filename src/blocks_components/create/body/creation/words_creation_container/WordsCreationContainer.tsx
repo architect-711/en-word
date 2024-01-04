@@ -1,7 +1,11 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import CreationModeContext from '../../../../../context/create_page/CreationModeContext';
 import WordsContext from '../../../../../context/create_page/WordsContext';
 import InputValidator from '../../../../../modules/input_validator/InputValidator';
 import MAX_WORDS_NUMBER from '../../../../../typing/constant/maxWordsNumber';
+import ErrorCase from '../../../../../typing/interface/ErrorCase';
+import { IsChecksFailed } from '../../../../../typing/types/CreationChecks';
 import Button from '../../../../ui/button/Button';
 import Input from '../../../../ui/input/Input';
 import styles from './WordsCreationContainer.module.css';
@@ -12,14 +16,26 @@ interface Props {
 
 export default function WordsCreationContainer({ setErrorMessage }: Props) {
     const { wordsService, setWordsService } = useContext(WordsContext);
+    const { action, setAction } = useContext(CreationModeContext);
+
+    const [searchParams, setSearchParams] = useSearchParams({ foundWordByTitle: "" });
     const [inputValue, setInputValue] = useState<string>('');
 
     const inputValidator = new InputValidator(inputValue);
+    const navigate = useNavigate();
 
-    function onCreateButtonClick(): void {
+    useEffect(() => {
+        action === "add" && setSearchParams("");
+    }, [action, searchParams]);
+
+
+    function handleCreateWordClick(): void {
         inputValidator.validate();
 
-        if (isChecksFailed()) {
+        const isFailed: IsChecksFailed = isChecksFailed();
+        if (isFailed[0]) {
+            setErrorMessage(isFailed[1].message);
+
             return;
         }
 
@@ -28,21 +44,16 @@ export default function WordsCreationContainer({ setErrorMessage }: Props) {
         setErrorMessage('');
     }
 
-    function isChecksFailed(): boolean {
+    function isChecksFailed(): IsChecksFailed {
         const errorCases: { id: number, condition: boolean, message: string }[] = [
             {id: 0, condition: !inputValidator.isValid(), message: "String contains not English letter or empty."},
             {id: 1, condition: wordsService.isExistsByTitle(inputValidator.input), message: "This word is already exists."},
             {id: 2, condition: wordsService.words.length === MAX_WORDS_NUMBER, message: `Max words number (${MAX_WORDS_NUMBER}) reached.`}
         ] as const;
 
-        const happanedErrorCase = errorCases.find(error => error.condition);
+        const happanedErrorCase: ErrorCase | undefined = errorCases.find(error => error.condition);
 
-        if (typeof happanedErrorCase !== "undefined") {
-            setErrorMessage(happanedErrorCase.message);
-
-            return true;
-        }
-        return false;
+        return typeof happanedErrorCase !== "undefined" ? [true, happanedErrorCase] : [false, null];
     }
 
     function addValidWord(title: string): void {
@@ -51,16 +62,35 @@ export default function WordsCreationContainer({ setErrorMessage }: Props) {
         setWordsService(wordsService.state);
     }
 
+    function handleFindWordByTitleClick(): void {
+        console.log("click");
+        inputValidator.validate();
+
+        const isFailed: IsChecksFailed = isChecksFailed();
+        if (isFailed[0] && isFailed[1].id === 0) {
+            return;
+        }
+
+        setSearchParams(prevValue => {
+            prevValue.set("foundWordByTitle", inputValidator.input);
+
+            return prevValue;
+        });
+    }
+
     return (
         <div className={`${styles.container} _global_flex_class`}>
 
             <Input
-                placeholder="Enter the title..."
+                placeholder={ action === "add" ? "Enter the title..." : "Find by title"}
                 className={styles.input}
                 value={inputValue}
                 setInputValue={setInputValue}
             />
-            <Button text="create" onClick={onCreateButtonClick}/>
+            <Button
+                text={ action === "add" ? "create" : "find" }
+                onClick={ action === "add" ? handleCreateWordClick : handleFindWordByTitleClick}
+            />
 
         </div>
     );

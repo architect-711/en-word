@@ -1,5 +1,5 @@
 import Word from "../../../../../typing/interface/Word";
-import WordListItem from "../item/WordListItem";
+import WordListItem from "./item/WordListItem";
 import styles from './WordsList.module.css';
 
 interface Props {

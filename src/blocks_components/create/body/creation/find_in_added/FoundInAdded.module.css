@@ -1,0 +1,39 @@
+.container {
+    margin-top: 10px;
+}
+.break_line {
+    background-color: rgb(0, 0, 0, .1);
+    height: 1px;
+    width: 100%;
+}
+.action_container {
+    margin-top: 10px;
+}
+#title {
+    font-weight: 500;
+}
+.found_element_controls {
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.found_element {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+
+    width: 65%;
+}
+#found_element_name {
+    color: rgb(0, 0, 0, .8);
+    font-weight: 400;
+}
+.error_message {
+    margin-top: 10px;
+}
+.input {
+    width: 60%;
+}
+.delete_button {
+    background-color: #FC2D2D;
+    color: #fff;
+}
