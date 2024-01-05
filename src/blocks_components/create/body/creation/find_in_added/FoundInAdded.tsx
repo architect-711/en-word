@@ -5,6 +5,7 @@ import Word from "../../../../../typing/interface/Word";
 import Button from "../../../../ui/button/Button";
 import Input from "../../../../ui/input/Input";
 import styles from "./FoundInAdded.module.css";
+import CustomEssentialError from "../../../../../typing/interface/CustomEssentialError";
 
 type StateWord = undefined | Word;
 
@@ -22,7 +23,6 @@ export const FoundInAdded = () => {
 	useEffect(() => {
 		const foundWordByTitle: string | null = searchParams.get("foundWordByTitle");
 
-		console.log(foundWordByTitle !== null && foundWordByTitle.length > 0);
 		if (foundWordByTitle !== null && foundWordByTitle.length > 0) {
 			fetchWord(foundWordByTitle);
 
@@ -44,25 +44,40 @@ export const FoundInAdded = () => {
 	}
 
 	function onModifyButtonClick(): void {
+		if (typeof word === "undefined") {
+			setErrorMessage("Word dissapeard somewhere.");
+
+			return;
+		}
+
 		if (isInputDisabled) {
-			setInputValue(word!.title);
+			setInputValue(word.title);
 			setIsInputDisabled(false);
 
 			return;
 		}
 		setIsInputDisabled(true);
-		setWord({ id: word!.id, title: inputValue });
 
+		const newWord: Word = {
+			id: word.id,
+			title: inputValue
+		}
+
+		setWord(newWord);
 
 		// move checks to the global file, because the same action should be done here like in WordsCreationContainer
-		// crutch (deletion is not works)
 
-		wordsService.deleteWordById(word!.id);
-		wordsService.addNewWord(inputValue);
+		handleChangingWord(newWord);
+	}
 
-		setWordsService(wordsService.state);
-		// wordsService.
-		// setWordsService()
+	function handleChangingWord(word: Word): void {
+		try {
+			wordsService.changeTitleById(word.id, word.title);
+
+			setWordsService(wordsService.state);
+		} catch (error) {
+			error instanceof CustomEssentialError ? setErrorMessage(error.message) : setErrorMessage("Unknown error happaned. ");
+		}
 	}
 
 	const onDeleteButtonClick = () => {
@@ -83,31 +98,31 @@ export const FoundInAdded = () => {
 
 				{
 					typeof word === "undefined"
-					?
-					<p className={styles.error_message}>{ errorMessage }</p>
-					:
-					<div className={`${styles.found_element_controls} _global_flex_class`}>
+						?
+						<p className={styles.error_message}>{errorMessage}</p>
+						:
+						<div className={`${styles.found_element_controls} _global_flex_class`}>
 
-						<Input
-							className={styles.input}
-							value={ isInputDisabled ? word.title : inputValue}
-							isDisabled={isInputDisabled}
-							setInputValue={setInputValue}
-						/>
+							<Input
+								className={styles.input}
+								value={isInputDisabled ? word.title : inputValue}
+								isDisabled={isInputDisabled}
+								setInputValue={setInputValue}
+							/>
 
-						<Button
-							className={styles.modify_button}
-							text={ isInputDisabled ? "modify" : "save"}
-							onClick={onModifyButtonClick}
-						/>
+							<Button
+								className={styles.modify_button}
+								text={isInputDisabled ? "modify" : "save"}
+								onClick={onModifyButtonClick}
+							/>
 
-						<Button
-							className={styles.delete_button}
-							text="delete"
-							onClick={onDeleteButtonClick}
-						/>
+							<Button
+								className={styles.delete_button}
+								text="delete"
+								onClick={onDeleteButtonClick}
+							/>
 
-					</div>
+						</div>
 				}
 
 

@@ -4,9 +4,12 @@ import WordsContext from '../../../../context/create_page/WordsContext';
 import CreationMode from '../../../../typing/types/CreationMode';
 import Button from '../../../ui/button/Button';
 import styles from './LeftAside.module.css';
+import { useSearchParams } from 'react-router-dom';
 
 export default function LeftAsideBlock(): JSX.Element {
     const { wordsService, setWordsService } = useContext(WordsContext);
+    const [_, setSearchParams] = useSearchParams();
+
     const { action, setAction } = useContext(CreationModeContext);
 
     const [mode, setMode] = useState<CreationMode>(action);
@@ -16,6 +19,8 @@ export default function LeftAsideBlock(): JSX.Element {
             return;
         }
         wordsService.clear();
+        setSearchParams("");
+        setAction("add");
 
         setWordsService(wordsService.state);
     }

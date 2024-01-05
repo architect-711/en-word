@@ -4,7 +4,7 @@ import Word from '../../../../typing/interface/Word';
 import WordsListViewController from './words_list_view_controller/WordsListViewController';
 import styles from './RightAside.module.css';
 import Pagination from './pagination/Pagination';
-import WORDS_PER_PAGE from '../../../../typing/constant/wordsPerPageCount';
+import { WORDS_PER_PAGE } from '../../../../global.d';
 
 export default function RightAside(): JSX.Element {
     const { wordsService } = useContext(WordsContext);

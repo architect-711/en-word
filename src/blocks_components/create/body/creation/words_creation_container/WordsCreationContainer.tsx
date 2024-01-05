@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import CreationModeContext from '../../../../../context/create_page/CreationModeContext';
 import WordsContext from '../../../../../context/create_page/WordsContext';
+import { MAX_WORDS_NUMBER } from '../../../../../global.d';
 import InputValidator from '../../../../../modules/input_validator/InputValidator';
-import MAX_WORDS_NUMBER from '../../../../../typing/constant/maxWordsNumber';
 import ErrorCase from '../../../../../typing/interface/ErrorCase';
 import { IsChecksFailed } from '../../../../../typing/types/CreationChecks';
 import Button from '../../../../ui/button/Button';
@@ -22,12 +22,10 @@ export default function WordsCreationContainer({ setErrorMessage }: Props) {
     const [inputValue, setInputValue] = useState<string>('');
 
     const inputValidator = new InputValidator(inputValue);
-    const navigate = useNavigate();
 
     useEffect(() => {
         action === "add" && setSearchParams("");
     }, [action, searchParams]);
-
 
     function handleCreateWordClick(): void {
         inputValidator.validate();
@@ -46,9 +44,9 @@ export default function WordsCreationContainer({ setErrorMessage }: Props) {
 
     function isChecksFailed(): IsChecksFailed {
         const errorCases: { id: number, condition: boolean, message: string }[] = [
-            {id: 0, condition: !inputValidator.isValid(), message: "String contains not English letter or empty."},
-            {id: 1, condition: wordsService.isExistsByTitle(inputValidator.input), message: "This word is already exists."},
-            {id: 2, condition: wordsService.words.length === MAX_WORDS_NUMBER, message: `Max words number (${MAX_WORDS_NUMBER}) reached.`}
+            { id: 0, condition: !inputValidator.isValid(), message: "String contains not English letter or empty." },
+            { id: 1, condition: wordsService.isExistsByTitle(inputValidator.input), message: "This word is already exists." },
+            { id: 2, condition: wordsService.words.length === MAX_WORDS_NUMBER, message: `Max words number (${MAX_WORDS_NUMBER}) reached.` }
         ] as const;
 
         const happanedErrorCase: ErrorCase | undefined = errorCases.find(error => error.condition);
@@ -63,7 +61,6 @@ export default function WordsCreationContainer({ setErrorMessage }: Props) {
     }
 
     function handleFindWordByTitleClick(): void {
-        console.log("click");
         inputValidator.validate();
 
         const isFailed: IsChecksFailed = isChecksFailed();
@@ -82,14 +79,14 @@ export default function WordsCreationContainer({ setErrorMessage }: Props) {
         <div className={`${styles.container} _global_flex_class`}>
 
             <Input
-                placeholder={ action === "add" ? "Enter the title..." : "Find by title"}
+                placeholder={action === "add" ? "Enter the title..." : "Find by title"}
                 className={styles.input}
                 value={inputValue}
                 setInputValue={setInputValue}
             />
             <Button
-                text={ action === "add" ? "create" : "find" }
-                onClick={ action === "add" ? handleCreateWordClick : handleFindWordByTitleClick}
+                text={action === "add" ? "create" : "find"}
+                onClick={action === "add" ? handleCreateWordClick : handleFindWordByTitleClick}
             />
 
         </div>

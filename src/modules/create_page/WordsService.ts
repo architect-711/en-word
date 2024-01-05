@@ -1,4 +1,4 @@
-import MAX_WORDS_NUMBER from "../../typing/constant/maxWordsNumber";
+import { MAX_WORDS_NUMBER } from './../../global.d';
 import CustomEssentialError from "../../typing/interface/CustomEssentialError";
 import Word from "../../typing/interface/Word";
 
@@ -17,7 +17,21 @@ export default class WordsService {
     }
 
     public createWord(title: string): Word {
-        return {id: Date.now(), title: title};
+        return { id: Date.now(), title: title };
+    }
+
+    public changeTitleById(id: number, title: string): void {
+        const word: Word | undefined = this.getWordById(id);
+
+        if (typeof word === "undefined") {
+            throw new CustomEssentialError("Attempt to modify unexisting word.");
+        }
+        this.deleteWordById(id);
+        this._words = [...this._words, { ...word, title: title }];
+    }
+
+    public getWordById(id: number): Word | undefined {
+        return this._words.find(word => word.id === id);
     }
 
     public isExistsByTitle(title: string): boolean {

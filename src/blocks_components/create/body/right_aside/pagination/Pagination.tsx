@@ -1,4 +1,4 @@
-import WORDS_PER_PAGE from "../../../../../typing/constant/wordsPerPageCount";
+import { WORDS_PER_PAGE } from "../../../../../global.d";
 import styles from "./Pagination.module.css";
 import { Item } from "./paginaiton_item/Item";
 
