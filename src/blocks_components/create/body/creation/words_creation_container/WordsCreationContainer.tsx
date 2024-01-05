@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import CreationModeContext from '../../../../../context/create_page/CreationModeContext';
 import WordsContext from '../../../../../context/create_page/WordsContext';
@@ -25,6 +25,10 @@ export default function WordsCreationContainer({ setErrorMessage }: Props) {
 
     useEffect(() => {
         action === "add" && setSearchParams("");
+
+        if (searchParams.get("foundWordByTitle") === null && inputValue.length > 0) {
+            setInputValue("");
+        }
     }, [action, searchParams]);
 
     function handleCreateWordClick(): void {
@@ -77,12 +81,13 @@ export default function WordsCreationContainer({ setErrorMessage }: Props) {
 
     return (
         <div className={`${styles.container} _global_flex_class`}>
-
             <Input
-                placeholder={action === "add" ? "Enter the title..." : "Find by title"}
-                className={styles.input}
-                value={inputValue}
-                setInputValue={setInputValue}
+                options={{
+                    placeholder: action === 'add' ? 'Enter the title...' : 'Find by title',
+                    className: styles.input,
+                    value: inputValue
+                }}
+                onChangeFun={setInputValue}
             />
             <Button
                 text={action === "add" ? "create" : "find"}

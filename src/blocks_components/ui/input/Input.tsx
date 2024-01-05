@@ -1,21 +1,28 @@
+import { forwardRef } from 'react';
 import styles from './Input.module.css';
 
-interface Props {
-    placeholder?: string,
-    className?: string,
+interface Options {
+    placeholder: string,
+    className: string
     value: string,
-    isDisabled?: boolean,
-    setInputValue: (value: string) => void
+    disabled: boolean
 }
 
-export default function Input({placeholder, className, value, isDisabled, setInputValue}: Props): JSX.Element {
+interface Props {
+    options: Partial<Options>,
+    onChangeFun?: (value: string) => void
+}
+
+const Input = forwardRef(({ options, onChangeFun }: Props, ref?) => {
+
     return (
         <input
-            className={`${styles.input} ${className}`}
-            placeholder={placeholder}
-            value={value}
-            disabled={isDisabled}
-            onChange={event => setInputValue(event.target.value)}
+            {...options}
+            className={`${styles.input} ${options.className}`}
+            onChange={typeof onChangeFun !== "undefined" ? event => onChangeFun(event.target.value) : () => {}}
+            ref={ref}
         />
     );
-}
+});
+
+export default Input;
